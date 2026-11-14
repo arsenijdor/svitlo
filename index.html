@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Світло — застосунок і прошивка</title>
+<style>
+  * { box-sizing:border-box; }
+  body { margin:0; padding:28px 16px 48px; background:#0B0F14; color:#E6EDF3;
+         font:16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .wrap { max-width:560px; margin:0 auto; }
+  header { margin-bottom:22px; }
+  h1 { margin:0; font-size:28px; letter-spacing:-.6px; }
+  .sub { color:#8B98A5; font-size:13px; margin-top:4px; }
+  .card { background:#131A23; border:1px solid #1F2A37; border-radius:18px;
+          padding:20px; margin-bottom:16px; }
+  h2 { margin:0 0 12px; font-size:12px; letter-spacing:1.2px; text-transform:uppercase;
+       color:#8B98A5; font-weight:700; }
+  .ver { font-size:30px; font-weight:800; color:#34D399; line-height:1.1; }
+  .muted { color:#8B98A5; font-size:13px; }
+  a.btn { display:block; text-align:center; text-decoration:none; margin-top:14px;
+          background:#60A5FA; color:#0B0F14; font-weight:700; padding:14px;
+          border-radius:12px; }
+  a.btn.ghost { background:transparent; color:#E6EDF3; border:1px solid #1F2A37;
+                font-weight:600; margin-top:10px; }
+  .two { display:flex; gap:10px; }
+  .two a { flex:1; }
+  pre { margin:14px 0 0; padding:14px; background:#0F151D; border:1px solid #22303F;
+        border-radius:12px; overflow-x:auto; font-size:11.5px; line-height:1.75; }
+  pre b { color:#F0B429; font-weight:600; }
+  pre i { color:#4B5A69; font-style:normal; }
+  ol { margin:12px 0 0; padding-left:20px; }
+  ol li { margin-bottom:8px; }
+  code { background:#0F151D; padding:2px 6px; border-radius:6px; font-size:12.5px; }
+  .note { margin-top:12px; padding:10px 12px; border-radius:10px; font-size:12.5px;
+          background:#12202B; color:#8FB6CE; }
+  .note.warn { background:#241C10; color:#E8B85C; }
+  .note.bad  { background:#2A1416; color:#E88; }
+  .row { margin-top:12px; font-size:11.5px; color:#6B7887; word-break:break-all; }
+  ul.boards { margin:8px 0 0; padding-left:20px; font-size:13px; color:#B7C2CE; }
+  ul.boards li { margin-bottom:4px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>Світло</h1>
+    <div class="sub">Світло вдома за фактом — і графік відключень поруч</div>
+  </header>
+
+  <div class="card">
+    <h2>Застосунок для Android</h2>
+    <div class="ver">1.7.1</div>
+    <div class="muted">Кнопка «Надіслати тестове сповіщення» в налаштуваннях + оновлена інструкція зі скриншотами</div>
+    <a class="btn" href="svitlo-1.7.1.apk">Завантажити APK (51.0 МБ)</a>
+    <div class="note">Оновлення приходить і з самого застосунку:
+      Налаштування → Оновлення.</div>
+  </div>
+
+  <div class="card">
+    <h2>Прошивка для плати</h2>
+    <div class="muted">Один файл, підходить і на ESP8266, і на ESP32:</div>
+    <ul class="boards">
+      <li>ESP8266 — Wemos D1 mini, NodeMCU V3</li>
+      <li>ESP32 — DevKit V1/WROOM-32, ESP32-C3, ESP32-S3</li>
+    </ul>
+    <a class="btn" href="svitlo_hb_universal.ino" download>Завантажити прошивку (.ino)</a>
+
+    <h2 style="margin-top:22px">Що треба ввести</h2>
+    <div class="muted">Це блок у самому верху файлу — усе інше чіпати не потрібно:</div>
+<pre><i>// ДАНІ ВАШОЇ МЕРЕЖІ WI-FI (2.4 ГГц)</i>
+#define WIFI_SSID   <b>"НАЗВА_МЕРЕЖІ"</b>
+#define WIFI_PASS   <b>"ПАРОЛЬ_МЕРЕЖІ"</b>
+
+<i>// ТОПІК ПЛАТИ (це ваш «пароль» каналу)</i>
+#define TOPIC_STATE <b>"svitlo/misto-xxxxxxxx/state"</b></pre>
+
+    <div class="note warn">Мережа строго 2.4 ГГц. Якщо роутер роздає одне ім'я
+      на 2.4 і 5 ГГц — заведіть окреме ім'я для 2.4 ГГц, інакше плата може не
+      підключитися.</div>
+
+    <h2 style="margin-top:22px">Три кроки</h2>
+    <ol>
+      <li>Вписати назву мережі, пароль і <b>свій</b> топик (не з прикладу).</li>
+      <li>Arduino IDE → бібліотека <code>PubSubClient</code> → «Завантажити».</li>
+      <li>У застосунку: Налаштування → Топік плати — та сама строка.
+        Картка стане «СВІТЛО Є».</li>
+    </ol>
+
+    <div class="note">Топик — це фактично пароль: хто його знає, той бачить
+      стан вашої оселі і може його підробити. Нікому не показуйте. Інтернет
+      стабільний? Тоді все, що потрібно від плати — раз на кілька хвилин
+      підтверджувати, що вона жива. Зникло живлення → зникла плата → застосунок
+      пише «СВІТЛА НЕМАЄ».</div>
+
+    <a class="btn ghost" href="https://github.com/arsenijdor/svitlo#readme">Повна інструкція</a>
+  </div>
+
+  <div class="card">
+    <h2>Посилання</h2>
+    <div class="two">
+      <a class="btn ghost" href="https://github.com/arsenijdor/svitlo/releases">Усі версії</a>
+      <a class="btn ghost" href="https://github.com/arsenijdor/svitlo">Код на GitHub</a>
+    </div>
+    <div class="row">Маніфест оновлень: <code>version.json</code><br>https://arsenijdor.github.io/svitlo/version.json</div>
+  </div>
+
+</div>
+</body>
+</html>
