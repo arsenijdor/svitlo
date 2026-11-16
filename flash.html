@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Світло Одеса — прошити плату</title>
+<style>
+  :root {
+    --bg: #0b0e11; --card: #14181d; --card-soft: #1b2128;
+    --text: #e8edf2; --muted: #8b97a3; --accent: #2ee6a8; --border: #232a31;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    padding: 26px 18px 60px;
+  }
+  main { max-width: 640px; margin: 0 auto; }
+  a.back { color: var(--muted); font-size: 13px; text-decoration: none; }
+  h1 { font-size: 27px; margin: 14px 0 6px; letter-spacing: -0.5px; }
+  .sub { color: var(--muted); margin: 0 0 22px; font-size: 14.5px; }
+  h2 { font-size: 17px; margin: 28px 0 8px; }
+  ol, ul { padding-left: 22px; }
+  li { margin: 7px 0; }
+  .card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 14px; padding: 18px; margin: 18px 0;
+  }
+  .install { text-align: center; padding: 26px 18px; }
+  esp-web-install-button { display: inline-block; }
+  /* власна кнопка через слот activate — інакше компонент малює свою синю
+     англійську «Connect», яка не збігається з темою */
+  .install-btn {
+    background: var(--accent); color: #06231a; border: 0;
+    border-radius: 14px; padding: 15px 30px; font-size: 16.5px; font-weight: 700;
+    font-family: inherit; cursor: pointer;
+  }
+  .install-btn:hover { filter: brightness(1.06); }
+  .install-btn:active { transform: scale(0.99); }
+  .hint { color: var(--muted); font-size: 13px; }
+  .warn { border-color: #6b4a1f; background: #1d1710; }
+  code { background: var(--card-soft); padding: 1px 6px; border-radius: 5px; font-size: 13.5px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 8px; }
+  th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--border); }
+  th { color: var(--muted); font-weight: 600; }
+  .badge {
+    display: inline-block; background: var(--card-soft); border: 1px solid var(--border);
+    color: var(--muted); border-radius: 8px; padding: 2px 8px; font-size: 12px;
+    margin-right: 6px;
+  }
+  footer { color: var(--muted); font-size: 12.5px; margin-top: 34px; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="./">← Світло Одеса</a>
+  <h1>Прошити плату</h1>
+  <p class="sub">Перетворює плату ESP8266 або ESP32 на датчик світла.
+  Нічого встановлювати не треба — прошивка заливається прямо з браузера.</p>
+
+  <div class="card install">
+    <esp-web-install-button manifest="firmware/manifest.json">
+      <button slot="activate" class="install-btn">Прошити плату</button>
+      <span slot="unsupported" class="hint">
+        Цей браузер не вміє працювати з USB. Відкрийте сторінку в Chrome, Edge
+        або Firefox на комп'ютері (на Android — у Chrome).
+      </span>
+      <span slot="not-allowed" class="hint">
+        Сторінку відкрито не по HTTPS — прошивка недоступна.
+      </span>
+    </esp-web-install-button>
+    <p class="hint" style="margin: 14px 0 0">
+      Плата має бути вже вставлена в USB. Браузер сам визначить чип і вибере
+      потрібний файл.
+    </p>
+  </div>
+
+  <h2>Що буде далі</h2>
+  <ol>
+    <li>Натиснути кнопку вище й вибрати порт плати (COM3, COM5…).</li>
+    <li>Дочекатися «Готово» — це 20–40 секунд.</li>
+    <li>Плата створить власну мережу <code>Svitlo-XXXX</code>.</li>
+    <li>Підключитися до неї телефоном → відкриється сторінка налаштування.</li>
+    <li>Вибрати свій Wi-Fi 2.4 ГГц, вписати пароль, зберегти.</li>
+    <li>Скопіювати топік, який покаже плата, у застосунок.</li>
+  </ol>
+
+  <h2>Що знадобиться</h2>
+  <div class="card">
+    <span class="badge">плата</span>
+    <span class="badge">кабель з даними</span>
+    <span class="badge">Chrome / Edge / Firefox</span>
+    <table>
+      <tr><th>Плата</th><th>Підходить</th></tr>
+      <tr><td>Wemos D1 mini, D1 R2 (УНО), NodeMCU V3</td><td>так, ESP8266</td></tr>
+      <tr><td>ESP32 DevKit, WROOM-32</td><td>так, ESP32</td></tr>
+      <tr><td>ESP-01 / ESP-01S</td><td>ні — немає USB</td></tr>
+    </table>
+  </div>
+
+  <h2>Якщо щось не так</h2>
+  <div class="card warn">
+    <table>
+      <tr>
+        <td><strong>Кнопка сіра / «браузер не підтримується»</strong></td>
+        <td>Відкрийте в Chrome або Edge. Safari й Firefox на macOS старіших
+        версій Web Serial не мають.</td>
+      </tr>
+      <tr>
+        <td><strong>Плата не з'являється в списку портів</strong></td>
+        <td>Замініть кабель на той, що передає дані (зарядні не підходять).
+        На Windows для дешевих плат іноді потрібен драйвер CH340.</td>
+      </tr>
+      <tr>
+        <td><strong>«Failed to connect»</strong></td>
+        <td>Від'єднайте й приєднайте плату, спробуйте ще раз. Не тримайте
+        затиснутою кнопку reset.</td>
+      </tr>
+      <tr>
+        <td><strong>Не бачить мережу 2.4 ГГц</strong></td>
+        <td>ESP8266 фізично не бачить 5 ГГц. Якщо роутер роздає одну назву на
+        обидва діапазони — зробіть окрему назву для 2.4 ГГц.</td>
+      </tr>
+    </table>
+  </div>
+
+  <h2>Перепрошити або скинути</h2>
+  <p class="hint">Той самий файл можна заливати повторно — наприклад, після
+  оновлення прошивки. Прошивка стирає збережені налаштування Wi-Fi, тому після
+  неї плату треба налаштувати заново (або скористатися «Скинути налаштування»
+  на сторінці плати, якщо Wi-Fi просто змінився).</p>
+
+  <footer>
+    Прошивка: <code>firmware/svitlo_portal</code> у репозиторії. Повна
+    інструкція зі складання — у README проєкту.
+  </footer>
+</main>
+
+<script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
+</body>
+</html>
