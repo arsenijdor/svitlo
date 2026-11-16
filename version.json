@@ -1,0 +1,5 @@
+{
+  "version": "2.4.3",
+  "url": "https://arsenijdor.github.io/svitlo/svitlo-2.4.3.apk",
+  "notes": "Служба в фоні тепер запускається: додано CHANGE_NETWORK_STATE (вимога Android 14+ для типу connectedDevice)"
+}
