@@ -1,0 +1,5 @@
+{
+  "version": "2.4.0",
+  "url": "https://arsenijdor.github.io/svitlo/svitlo-2.4.0.apk",
+  "notes": "Перевірка кожні 5 хвилин у фоні (постійна служба, як у Spotify), тумблер «Постійна робота у фоні»"
+}
