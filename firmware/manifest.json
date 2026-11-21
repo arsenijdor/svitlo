@@ -1,0 +1,25 @@
+{
+  "name": "Світло Одеса",
+  "version": "2.6.3",
+  "new_install_prompt_erase": true,
+  "builds": [
+    {
+      "chipFamily": "ESP8266",
+      "parts": [
+        {
+          "path": "esp8266/svitlo-esp8266.bin",
+          "offset": 0
+        }
+      ]
+    },
+    {
+      "chipFamily": "ESP32",
+      "parts": [
+        {
+          "path": "esp32/svitlo-esp32.bin",
+          "offset": 0
+        }
+      ]
+    }
+  ]
+}
