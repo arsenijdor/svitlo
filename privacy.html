@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Світло Одеса — політика конфіденційності</title>
+<style>
+  :root {
+    --bg: #0b0e11;
+    --card: #14181d;
+    --text: #e8edf2;
+    --muted: #8b97a3;
+    --accent: #2ee6a8;
+    --border: #232a31;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    padding: 28px 20px 64px;
+  }
+  main { max-width: 760px; margin: 0 auto; }
+  h1 { font-size: 26px; line-height: 1.25; margin: 0 0 6px; letter-spacing: -0.4px; }
+  .sub { color: var(--muted); font-size: 13.5px; margin-bottom: 26px; }
+  h2 { font-size: 18px; margin: 30px 0 10px; }
+  p, li { color: var(--text); }
+  ul { padding-left: 22px; }
+  li { margin: 6px 0; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin: 18px 0;
+  }
+  .card p { margin: 6px 0; }
+  code {
+    background: #1b2027;
+    border-radius: 5px;
+    padding: 1px 6px;
+    font-size: 13.5px;
+  }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14.5px; }
+  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; }
+  a { color: var(--accent); }
+  footer { margin-top: 34px; color: var(--muted); font-size: 12.5px; }
+</style>
+</head>
+<body>
+<main>
+
+<h1>Політика конфіденційності</h1>
+<div class="sub">Застосунок «Світло Одеса» (ua.svitlo.svitlo_app) · редакція від 15 листопада 2026</div>
+
+<div class="card">
+  <p><strong>Коротко:</strong> застосунок не має акаунтів, не має власного сервера й не
+  збирає персональні дані. Усе, що ви вводите, зберігається лише на вашому телефоні.</p>
+</div>
+
+<h2>1. Які дані зберігаються на пристрої</h2>
+<p>Ці дані нікуди не надсилаються розробнику — вони лежать у локальному сховищі
+застосунку (shared_preferences) і зникають разом із ним:</p>
+<ul>
+  <li>адреси, які ви додали (місто, вулиця, будинок) та номер черги;</li>
+  <li>топік вашої плати на MQTT-брокері;</li>
+  <li>налаштування сповіщень і журнал уже показаних сповіщень;</li>
+  <li>останній відомий стан графіка — щоб показати його без мережі.</li>
+</ul>
+
+<h2>2. Куди йдуть запити</h2>
+<p>Застосунок звертається напряму до публічних джерел. Жодного проміжного сервера
+розробника не існує.</p>
+<table>
+  <tr><th>Сервіс</th><th>Навіщо</th><th>Що передається</th></tr>
+  <tr>
+    <td><code>broker.hivemq.com</code></td>
+    <td>стан вашої плати (MQTT)</td>
+    <td>топік плати; сам стан — слово <code>online</code>/<code>offline</code></td>
+  </tr>
+  <tr>
+    <td><code>raw.githubusercontent.com</code></td>
+    <td>графік відключень (публічне дзеркало даних ДТЕК)</td>
+    <td>лише звичайний HTTP-запит, без ідентифікаторів</td>
+  </tr>
+  <tr>
+    <td><code>www.dtek-oem.com.ua</code></td>
+    <td>довідник адрес, щоб визначити чергу за будинком</td>
+    <td>назва вулиці й номер будинку, які ви обрали</td>
+  </tr>
+</table>
+<p>Ці сервіси можуть бачити вашу IP-адресу — так само, як будь-який сайт, який ви
+відкриваєте. Розробник застосунку не має до цих запитів доступу й не веде логи.</p>
+
+<h2>3. Дозволи й навіщо вони</h2>
+<ul>
+  <li><strong>Інтернет</strong> — графік, довідник адрес, стан плати.</li>
+  <li><strong>Сповіщення</strong> — «світло з'явилося / зникло», нагадування за графіком.
+  Сповіщення створюються на телефоні, без push-сервера.</li>
+  <li><strong>Автозапуск після перезавантаження</strong> — щоб перевірки стану
+  відновилися самі.</li>
+</ul>
+<p>Застосунок не просить доступу до геолокації, контактів, камери, мікрофона,
+файлів чи телефону.</p>
+
+<h2>4. Реклама, аналітика, трекери</h2>
+<p>Немає. Застосунок не містить реклами, SDK аналітики, crash-репортерів і
+жодних сторонніх трекерів.</p>
+
+<h2>5. Діти</h2>
+<p>Застосунок не призначений для дітей і не збирає даних про них.</p>
+
+<h2>6. Видалення даних</h2>
+<p>Видаліть застосунок — разом із ним зникнуть усі збережені адреси й
+налаштування. Окремої процедури видалення не потрібно, бо на сервері нічого
+немає.</p>
+
+<h2>7. Зміни в політиці</h2>
+<p>Якщо політика зміниться, оновиться ця сторінка й дата редакції вгорі.</p>
+
+<h2>8. Контакт</h2>
+<p>Питання щодо конфіденційності: <a href="https://github.com/arsenijdor/svitlo/issues">github.com/arsenijdor/svitlo/issues</a>.</p>
+
+<footer>
+  «Світло Одеса» — неофіційний застосунок. Дані про графік належать
+  ДТЕК Одеські електромережі; застосунок лише показує їх у зручному вигляді.
+</footer>
+
+</main>
+</body>
+</html>
